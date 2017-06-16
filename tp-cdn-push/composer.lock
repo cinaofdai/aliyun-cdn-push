@@ -1,0 +1,56 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "b03cf153221750435c1a0b97066ffd3c",
+    "packages": [
+        {
+            "name": "dh2y/aliyun-push",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cinaofdai/aliyun-php-sdk-cdn.git",
+                "reference": "2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/cinaofdai/aliyun-php-sdk-cdn/2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4.zip",
+                "reference": "2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "AliyunCdn\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dh2y",
+                    "email": "xiadi54_long@yahoo.com"
+                }
+            ],
+            "description": "aliyun-push SDK",
+            "time": "2017-06-16 11:03:37"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": []
+}
