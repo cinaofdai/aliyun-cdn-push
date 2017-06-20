@@ -12,7 +12,9 @@
   想体验最新功能请使用thinkphp版
   
 ## 版本传送
-  thinkphp版 
-  yii2版  
-  乞丐版   
+  thinkphp版 https://github.com/cinaofdai/aliyun-cdn-push/tree/master/tp-cdn-push
+  
+  yii2版  编写中。。。
+  
+  乞丐版   https://github.com/cinaofdai/aliyun-cdn-push/tree/master/simple-cdn-push
   
