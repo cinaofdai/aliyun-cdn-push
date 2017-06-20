@@ -1,0 +1,63 @@
+<form class="form-horizontal" action="{:U('Aliyun/refresh')}" method="post">
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-action-select"> 操作类型 </label>
+        <div class="col-sm-9">
+            <select name="action" class="rcol-xs-10 col-sm-5" id="form-action-select">
+                <option value="Refresh">刷新</option>
+                <option value="Push">预热</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-type-select"> 刷新类型 </label>
+        <div class="col-sm-9">
+            <select name="type" class="rcol-xs-10 col-sm-5" id="form-type-select">
+                <option value="File">URL</option>
+                <option value="Directory">目录</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-url-textarea">URL</label>
+        <div class="col-sm-9">
+            <textarea name="url" class="rcol-xs-10 col-sm-5" rows="10" id="form-url-textarea" placeholder="http://demo.xiaoshouhudong.com/demo"></textarea>
+        </div>
+    </div>
+
+    <div class="space-4"></div>
+
+
+    <div class="clearfix form-actions">
+        <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" type="submit">
+                <i class="icon-ok bigger-110"></i>
+                提交
+            </button>
+            &nbsp; &nbsp; &nbsp;
+            <button class="btn" type="reset">
+                <i class="icon-undo bigger-110"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+
+    $('#form-action-select').change(function () {
+        var action = $(this).children('option:selected').val();
+        var option = '';
+        if (action == "Push") {
+            option = '<option value="File">URL</option>';
+        }else {
+            option = '<option value="File">URL</option><option value="Directory">目录</option>';
+        }
+        $('#form-type-select').html(option);
+    });
+
+
+</script>

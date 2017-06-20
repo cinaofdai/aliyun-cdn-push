@@ -16,7 +16,6 @@ class AliyunController extends AdminController
 {
 
     public function index(){
-
         $this->display();
     }
 
@@ -24,31 +23,31 @@ class AliyunController extends AdminController
     public function refresh(){
         AliyunCdn::start();
         $c = new \AliyunClient;
-        $c->accessKeyId = "<accessKeyId>";
-        $c->accessKeySecret = "<accessKeySecret>";
+        $config = C('ALIYUN_CDN');
+        $c->accessKeyId = $config['accessKeyId'];
+        $c->accessKeySecret = $config['accessKeySecret'];
         $c->serverUrl = "http://cdn.aliyuncs.com/"; //根据不同产品选择相应域名，例如：CDN，http://cdn.aliyuncs.com/
 
-        $url = I('post.url');
-        $req = new \Cdn20141111RefreshObjectCachesRequest();
-        $req->setObjectType("File"); // or Directory
-        $req->setObjectPath($url);
+        $data = I('post.');
+
+        if($data['action']=='Push'){
+            $req = new \Cdn20141111PushObjectCacheRequest();
+        }else{
+            $req = new \Cdn20141111RefreshObjectCachesRequest();
+            $req->setObjectType($data['type']); // or Directory
+        }
+
+        $req->setObjectPath(trim($data['url']));
         try {
             $resp = $c->execute($req);
-            if(!isset($resp->Code))
-            {
+            if(!isset($resp->Code)) {
                 //刷新成功
-                echo($resp->RequestId);
-                print_r($resp);
-            }
-            else
-            {
+               $this->success('刷新成功','index');
+            } else {
                 //刷新失败
-                $code = $resp->Code;
-                $message = $resp->Message;
+                $this->error($resp->Message,'index');
             }
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             // TODO: handle exception
         }
     }

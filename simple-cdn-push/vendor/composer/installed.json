@@ -1,0 +1,40 @@
+[
+    {
+        "name": "dh2y/aliyun-push",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cinaofdai/aliyun-php-sdk-cdn.git",
+            "reference": "2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/cinaofdai/aliyun-php-sdk-cdn/2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4.zip",
+            "reference": "2fc3325c4f2c77fea4938a7cda897cf8ab2cd5d4",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0"
+        },
+        "time": "2017-06-16T11:03:37+00:00",
+        "type": "project",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "AliyunCdn\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "dh2y",
+                "email": "xiadi54_long@yahoo.com"
+            }
+        ],
+        "description": "aliyun-push SDK"
+    }
+]

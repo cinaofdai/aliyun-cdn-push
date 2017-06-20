@@ -9,4 +9,10 @@ return array(
     'LAYOUT_ON'=>true,
     'LAYOUT_NAME'=>'Layout/master',
 
+    //阿里云配置
+    'ALIYUN_CDN' =>array(
+        'accessKeyId' => 'LTAIXTESTDPkANgP',
+        'accessKeySecret' => 'TEst7vIYdxA0tK5S2ktcoUfsIstest',
+    )
+
 );
