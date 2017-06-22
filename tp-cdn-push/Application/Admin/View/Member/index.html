@@ -1,0 +1,339 @@
+<div class="row">
+    <div class="widget-box">
+        <div class="widget-header">
+            <h4 class="smaller">
+                条件搜索框
+            </h4>
+        </div>
+        <div class="widget-body">
+            <div class="widget-main">
+                <form action="" method="get" >
+                    <select name="query[status]">
+                        <option value="">请选择状态</option>
+                        <option value="0">开启</option>
+                        <option value="1">关闭</option>
+                    </select>
+                    <input type="text" placeholder="用户名称" name="query[username]" value="">
+                    <button type="submit" class="btn btn-xs btn-success">
+                        <i class="icon-search bigger-110"></i>
+                        <span class="bigger-110 no-text-shadow">搜索</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PAGE CONTENT BEGINS -->
+<div class="row">
+    <div class="well well-sm">
+        <button class="btn btn-sm btn-success">
+            <i class="icon-plus bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">添加</span>
+        </button>
+        <button class="btn btn-sm btn-info">
+            <i class="icon-edit bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">编辑</span>
+        </button>
+        <button class="btn btn-sm btn-warning">
+            <i class="icon-ban-circle bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">禁用</span>
+        </button>
+        <button class="btn btn-sm btn-danger">
+            <i class="icon-trash bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">删除</span>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="center">
+                    <label>
+                        <input class="ace" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th>用户名称</th>
+                <th>Email</th>
+                <th class="hidden-480">最后登录时间</th>
+                <th class="hidden-480">登录IP</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <volist name="list" id="item">
+                <tr>
+                    <td class="center">
+                        <label>
+                            <input class="ace" type="checkbox">
+                            <span class="lbl"></span>
+                        </label>
+                    </td>
+
+                    <td>{$item.username}</td>
+                    <td>{$item.email}</td>
+                    <td class="hidden-480">{$item.login_time}</td>
+                    <td class="hidden-480">{$item.login_ip}</td>
+                    <td>
+                        <eq name="item.status" value="1">
+                            <i class="icon-ok bigger-120"></i>
+                        <else/>
+                            <i class="icon-ban-circle bigger-120"></i>
+                        </eq>
+                      </td>
+                    <td>
+                        <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                            <button class="btn btn-xs btn-info">
+                                <i class="icon-edit bigger-120"></i>
+                                编辑
+                            </button>
+
+                            <button class="btn btn-xs btn-danger">
+                                <i class="icon-trash bigger-120"></i>
+                                删除
+                            </button>
+                            <eq name="item.status" value="1">
+                                <button class="btn btn-xs btn-warning">
+                                    <i class="icon-ban-circle bigger-120"></i>
+                                    禁止
+                                </button>
+                                <else/>
+                                <button class="btn btn-xs btn-warning">
+                                    <i class="icon-ban-ok bigger-120"></i>
+                                    开启
+                                </button>
+                            </eq>
+                        </div>
+                        <div class="visible-xs visible-sm hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-cog icon-only bigger-110"></i>
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                    <li>
+                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+                                                <span class="green">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="删除">
+                                                <span class="red">
+                                                    <i class="icon-trash bigger-120"></i>
+                                                </span>
+                                        </a>
+                                    </li>
+                                    <eq name="item.status" value="1">
+                                        <li>
+                                            <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="禁止">
+                                                <span class="blue">
+                                                    <i class="icon-ban-circle bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <else/>
+                                        <li>
+                                            <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="开启">
+                                                <span class="blue">
+                                                    <i class="icon-ban-ok bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </eq>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </volist>
+
+
+            <tr>
+                <td class="center">
+                    <label>
+                        <input class="ace" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </td>
+
+                <td>
+                    <a href="#">base.com</a>
+                </td>
+                <td>$35</td>
+                <td class="hidden-480">2,595</td>
+                <td>Feb 18</td>
+
+                <td class="hidden-480">
+                    <span class="label label-sm label-success">Registered</span>
+                </td>
+
+                <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                        <button class="btn btn-xs btn-success">
+                            <i class="icon-ok bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-info">
+                            <i class="icon-edit bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-danger">
+                            <i class="icon-trash bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-warning">
+                            <i class="icon-flag bigger-120"></i>
+                        </button>
+                    </div>
+
+                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
+																				<span class="blue">
+																					<i class="icon-zoom-in bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+																				<span class="green">
+																					<i class="icon-edit bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+																				<span class="red">
+																					<i class="icon-trash bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="center">
+                    <label>
+                        <input class="ace" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </td>
+
+                <td>
+                    <a href="#">max.com</a>
+                </td>
+                <td>$60</td>
+                <td class="hidden-480">4,400</td>
+                <td>Mar 11</td>
+
+                <td class="hidden-480">
+                    <span class="label label-sm label-warning">Expiring</span>
+                </td>
+
+                <td>
+                    <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                        <button class="btn btn-xs btn-success">
+                            <i class="icon-ok bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-info">
+                            <i class="icon-edit bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-danger">
+                            <i class="icon-trash bigger-120"></i>
+                        </button>
+
+                        <button class="btn btn-xs btn-warning">
+                            <i class="icon-flag bigger-120"></i>
+                        </button>
+                    </div>
+
+                    <div class="visible-xs visible-sm hidden-md hidden-lg">
+                        <div class="inline position-relative">
+                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="View">
+																				<span class="blue">
+																					<i class="icon-zoom-in bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="Edit">
+																				<span class="green">
+																					<i class="icon-edit bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="Delete">
+																				<span class="red">
+																					<i class="icon-trash bigger-120"></i>
+																				</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    jQuery(function($) {
+        $('table th input:checkbox').on('click' , function(){
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox')
+                .each(function(){
+                    this.checked = that.checked;
+                    $(this).closest('tr').toggleClass('selected');
+                });
+
+        });
+
+
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+            var $source = $(source);
+            var $parent = $source.closest('table')
+            var off1 = $parent.offset();
+            var w1 = $parent.width();
+
+            var off2 = $source.offset();
+            var w2 = $source.width();
+
+            if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+            return 'left';
+        }
+    })
+</script>

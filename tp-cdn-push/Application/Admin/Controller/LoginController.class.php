@@ -3,7 +3,7 @@
  * Created by dh2y
  * email: xiaodai54_long@163.com
  * Date: 2017/6/20 17:35
- * describ: 登录
+ * describ: 登录控制器
  */
 
 namespace Admin\Controller;
@@ -50,5 +50,15 @@ class LoginController extends AdminController
         );
         $Verify =     new \Think\Verify($config);
         $Verify->entry();
+    }
+
+
+    /**
+     * 退出
+     */
+    public function logout(){
+        session(C("USER_AUTH_KEY"), null);
+        session("username", null);
+        $this->redirect('index');
     }
 }
