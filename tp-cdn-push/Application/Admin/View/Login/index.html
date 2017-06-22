@@ -64,7 +64,7 @@
     <script type="text/javascript">
         if("ontouchend" in document) document.write("<script src='__PUBLIC__/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
     </script>
-
+    <script src="__PUBLIC__/util.js"></script>
 </head>
 
 <body class="login-layout">
@@ -88,6 +88,8 @@
                         <div id="login-box" class="login-box visible widget-box no-border">
                             <div class="widget-body">
                                 <div class="widget-main">
+                                    <div class="alert">
+                                    </div>
                                     <h4 class="header blue lighter bigger">
                                         <i class="icon-coffee green"></i>
                                         通用后台(阿里推送版)
@@ -97,32 +99,33 @@
 
                                     <form id="login">
                                         <fieldset>
-                                            <label class="block clearfix">
+                                            <label data-tag="username" class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="text" v-model="model.username" class="form-control" placeholder="用户名" />
 															<i class="icon-user"></i>
 														</span>
                                             </label>
 
-                                            <label class="block clearfix">
+                                            <label data-tag="password" class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="password" v-model="model.password" class="form-control" placeholder="密码" />
 															<i class="icon-lock"></i>
 														</span>
                                             </label>
-                                            <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="验证码" />
+                                            <label data-tag="verify" class="inline clearfix">
+														<span class="input-icon input-icon-right">
+															<input type="text" v-model="model.verify" class="form-control" placeholder="验证码" />
 															<i class="icon-key"></i>
 														</span>
+                                                       <img src="{:U('Login/verify')}" onClick="this.src=this.src+'?'+Math.random()">
                                             </label>
 
                                             <div class="space"></div>
 
                                             <div class="clearfix">
                                                 <label class="inline">
-                                                    <input type="checkbox" style="display:none"/>
-                                                    <span class="lbl"> </span>
+                                                    <input class="ace" v-model="model.remember" type="checkbox" name="remember"/>
+                                                    <span class="lbl">记住账号密码</span>
                                                 </label>
 
                                                 <button v-on:click="doSubmit()" type="button" class="width-35 pull-right btn btn-sm btn-primary">
@@ -152,27 +155,37 @@
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
-    var vm = new Vue({
-        el: "#login",
-        data: {
-            model:{}
-        },
-        methods: {
-            doSubmit: function() {
-                console.log(this.model);
-                $.ajax({
-                    type:'post',
-                    data:this.model,
-                    url:"{:U('login/login')}",
-                    cache: false,
-                    dataType:'json',
-                    success:function(data){
-                        console.log(data+'hello');
-                    }
-                });
-            }
-        }
-    })
+   util.get("{:U('login/member')}",function (data) {
+       var model = (data==false)?{}:data;
+       var vm = new Vue({
+           el: "#login",
+           data: {
+               model:model,
+           },
+           methods: {
+               doSubmit: function() {
+                   console.log(this.model.remember);
+                   $.ajax({
+                       type:'post',
+                       data:this.model,
+                       url:"{:U('login/login')}",
+                       cache: false,
+                       dataType:'json',
+                       success:function(data){
+                           if(data.status==true){
+                               location.href="{:U('Index/index')}";
+                           }else {
+                               $('[data-tag]').siblings().removeClass('has-error');
+                               $('[data-tag="'+data.tag+'"]').addClass('has-error');
+                               util.alert('danger',data.message);
+                           }
+                       }
+                   });
+               }
+           }
+       })
+   })
+
 </script>
 </body>
 </html>
