@@ -34,4 +34,22 @@ class NavWidget extends Controller
         $html .= '</ul>';
         return $html;
     }
+
+    //form表单头
+    public function header(){
+        return $html ='<div class="well well-sm">
+                     <a href="javascript:history.back();" class="btn btn-sm btn-success">
+                        <i class="icon-undo  bigger-110"></i>
+                        <span class="bigger-110 no-text-shadow">返回</span>
+                     </a>
+                    <a href="javascript:location.reload();" class="btn btn-sm btn-info">
+                        <i class="icon-refresh bigger-110"></i>
+                         <span class="bigger-110 no-text-shadow">刷新</span>
+                    </a>
+                 </div>';
+    }
+
+    public function alert(){
+        return $html='<div class="alert"></div>';
+    }
 }

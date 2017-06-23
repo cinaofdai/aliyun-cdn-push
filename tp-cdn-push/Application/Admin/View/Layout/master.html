@@ -44,10 +44,9 @@
     <script src="__PUBLIC__/js/html5shiv.js"></script>
     <script src="__PUBLIC__/js/respond.min.js"></script>
     <![endif]-->
+    <script src="__PUBLIC__/js/vue.js"></script>
     <!--[if !IE]> -->
-
     <script src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
-
     <!-- <![endif]-->
 
     <!--[if IE]>
@@ -71,6 +70,8 @@
     <script type="text/javascript">
         if("ontouchend" in document) document.write("<script src='__PUBLIC__/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
     </script>
+    <script src="__PUBLIC__/js/layer/layer.js"></script>
+    <script src="__PUBLIC__/util.js"></script>
 </head>
 
 <body>
@@ -411,7 +412,7 @@
 
                     <ul class="submenu">
                         <li>
-                            <a href="elements.html">
+                            <a href="{:U('member/index')}">
                                 <i class="icon-double-angle-right"></i>
                                 用户管理
                             </a>

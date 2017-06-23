@@ -14,6 +14,7 @@ use Think\Model;
 class BaseModel extends Model
 {
     protected $labels = [];
+    public $scenario = false;
 
     public function create($data=''){
         $data = $this->load($data);
@@ -25,6 +26,13 @@ class BaseModel extends Model
         if(!isset($data)||$data==[]||$data==''){
             $data = I('post.');
         }
+
+        //如果有验证场景-取验证场景
+        if($this->scenario&&$this->scenario!=''){
+            $labels = $this->scenarios();
+            $this->labels =$labels[$this->scenario];
+        }
+
         return $this->labels = array_merge($this->labels,$data);
     }
 
