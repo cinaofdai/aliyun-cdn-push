@@ -19,23 +19,7 @@ class MemberController extends AdminController
      * 用户列表
      */
     public function index(){
-        $map = [];
-        $query = I('get.query');
-        if(is_array($query)){
-            foreach($query as $key=>$value){
-                if($value!=''){
-                    if(is_numeric($value)){
-                        if($value>-1){
-                            $map[$key] = array('eq',$value);
-                        }
-                    }else{
-                        $map[$key]  = array('like','%'.$value.'%');
-                    }
-                }
-            }
-        }
-        $list = M('admin')->where($map)->select();
-        $this->assign('list',$list);
+        $this->assign('list',$this->search(M('admin'),15));
         $this->display();
     }
 
@@ -82,6 +66,29 @@ class MemberController extends AdminController
                 $this->ajaxReturn(['status'=>true,'message'=>'删除成功']);
             }else{
                 $this->ajaxReturn(['status'=>false,'message'=>'删除失败']);
+            }
+        }else{
+            new \HttpRequestMethodException('请求不合法');
+        }
+    }
+
+    /**
+     * 改变用户状态
+     */
+    public function status(){
+        $ids = I('post.ids');
+        $action = I('post.action');
+        if(IS_AJAX && is_array($ids) && in_array($action,['open','off'])){
+            $map['id'] = ['in',$ids];
+            switch ($action){
+                case 'open': $data['status']=1;$message = '用户开启'; break;
+                case 'off':  $data['status']=0;$message = '用户关闭'; break;
+            }
+            $result = M('admin')->where($map)->save($data);
+            if($result){
+                $this->ajaxReturn(['status'=>true,'message'=>$message]);
+            }else{
+                $this->ajaxReturn(['status'=>false,'message'=>$message.'失败']);
             }
         }else{
             new \HttpRequestMethodException('请求不合法');

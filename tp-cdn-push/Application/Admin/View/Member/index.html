@@ -10,10 +10,10 @@
                 <form action="" method="get" >
                     <select name="query[status]">
                         <option value="">请选择状态</option>
-                        <option value="0">开启</option>
-                        <option value="1">关闭</option>
+                        <option value="1" <eq name="query['status']" value="1">selected</eq> >开启</option>
+                        <option value="0" <eq name="query['status']" value="0">selected</eq> >关闭</option>
                     </select>
-                    <input type="text" placeholder="用户名称" name="query[username]" value="">
+                    <input type="text" placeholder="用户名称" name="query[username]" value="{$query.username}">
                     <button type="submit" class="btn btn-xs btn-success">
                         <i class="icon-search bigger-110"></i>
                         <span class="bigger-110 no-text-shadow">搜索</span>
@@ -30,13 +30,13 @@
             <i class="icon-plus bigger-110"></i>
             <span class="bigger-110 no-text-shadow">添加</span>
         </a>
-        <a class="btn btn-sm btn-info">
-            <i class="icon-edit bigger-110"></i>
-            <span class="bigger-110 no-text-shadow">编辑</span>
-        </a>
-        <a class="btn btn-sm btn-warning">
+        <a onclick="changeStatus('off')" class="btn btn-sm btn-warning">
             <i class="icon-ban-circle bigger-110"></i>
             <span class="bigger-110 no-text-shadow">禁用</span>
+        </a>
+        <a  onclick="changeStatus('open')" class="btn btn-sm btn-success">
+            <i class="icon-ok bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">开启</span>
         </a>
         <a onclick="deleteCheck()" class="btn btn-sm btn-danger">
             <i class="icon-trash bigger-110"></i>
@@ -92,20 +92,20 @@
                                     编辑
                                 </a>
 
-                                <a onclick='deleteOne(this)' class="btn btn-xs btn-danger">
+                                <a onclick="actionOne(this,'delete')" class="btn btn-xs btn-danger">
                                     <i class="icon-trash bigger-120"></i>
                                     删除
                                 </a>
                                 <eq name="item.status" value="1">
-                                    <button class="btn btn-xs btn-warning">
+                                    <a onclick="actionOne(this,'off')" class="btn btn-xs btn-warning">
                                         <i class="icon-ban-circle bigger-120"></i>
                                         禁止
-                                    </button>
+                                    </a>
                                     <else/>
-                                    <button class="btn btn-xs btn-success">
+                                    <a onclick="actionOne(this,'open')" class="btn btn-xs btn-success">
                                         <i class="icon-ok bigger-120"></i>
                                         开启
-                                    </button>
+                                    </a>
                                 </eq>
                             </div>
                             <div class="visible-xs visible-sm hidden-md hidden-lg">
@@ -124,7 +124,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="" data-original-title="删除">
+                                            <a onclick="actionOne(this,'delete')" class="tooltip-error" data-rel="tooltip" title="" data-original-title="删除">
                                                 <span class="red">
                                                     <i class="icon-trash bigger-120"></i>
                                                 </span>
@@ -132,7 +132,7 @@
                                         </li>
                                         <eq name="item.status" value="1">
                                             <li>
-                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="" data-original-title="禁止">
+                                                <a onclick="actionOne(this,'off')" class="tooltip-info" data-rel="tooltip" title="" data-original-title="禁止">
                                                 <span class="blue">
                                                     <i class="icon-ban-circle bigger-120"></i>
                                                 </span>
@@ -140,7 +140,7 @@
                                             </li>
                                             <else/>
                                             <li>
-                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="" data-original-title="开启">
+                                                <a onclick="actionOne(this,'open')" class="tooltip-success" data-rel="tooltip" title="" data-original-title="开启">
                                                 <span class="green">
                                                     <i class="icon-ok bigger-120"></i>
                                                 </span>
@@ -157,6 +157,9 @@
                 </tbody>
             </form>
         </table>
+        <div class="panel-body center">
+            {$page}
+        </div>
     </div>
 </div>
 <script type="text/javascript">
@@ -195,16 +198,38 @@
             layer.close(index);
             util.submit('#checkBox',function (data) {
                 if(data.status==true){
-                    location.reload()
+                    layer.msg(data.message, function(){
+                        location.reload();
+                    });
+                }else {
+                    layer.msg(data.message);
                 }
-                layer.msg(data.message)
             })
         });
     }
 
-    //删除一个选项
-    function deleteOne(_this) {
-        $(_this).parents('tr').find('[type="checkbox"]').prop("checked", true);
-        deleteCheck();
+    function changeStatus(action) {
+        var params = $('#checkBox').serialize()+"&action="+action;
+        util.post("{:U('member/status')}",params,function (data) {
+            if(data.status==true){
+                layer.msg(data.message, function(){
+                    location.reload();
+                });
+            }else {
+                layer.msg(data.message);
+            }
+        })
     }
+
+    //删除/改变一个选项
+    function actionOne(_this,action) {
+        $(_this).parents('tr').find('[type="checkbox"]').prop("checked", true);
+        switch (action){
+            case 'delete':deleteCheck();return false;
+            case 'off':changeStatus('off');break;
+            case 'open':changeStatus('open');break;
+        }
+    }
+
+
 </script>
