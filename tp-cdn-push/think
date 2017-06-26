@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+/**
+ * thinkPHP console bootstrap file.
+ * @author dh2y <xiaodai54_long@163.com>
+ * @user   ./think /controller/action
+ */
+
+if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
+//普通模式，解决官方分组不支持cli的问题
+$depr = '/';
+$path   = isset($_SERVER['argv'][1])?$_SERVER['argv'][1]:'';
+if(!empty($path)) {
+    $params = explode($depr,trim($path,$depr));
+}
+
+!empty($params)?$_GET['m']=array_shift($params):"";
+!empty($params)?$_GET['a']=array_shift($params):"";
+if(count($params)>1) {
+// 解析剩余参数 并采用GET方式获取
+    preg_replace('@(\w+),([^,\/]+)@e', '$_GET[\'\\1\']="\\2";', implode(',',$params));
+}
+
+// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
+define('APP_DEBUG',True);
+
+// 定义应用目录
+define('APP_PATH',dirname(__FILE__).'/Application/');
+
+// 绑定访问Console模块
+define('BIND_MODULE','Console');
+
+// 定义运行Runtime目录
+define('RUNTIME_PATH',dirname(__FILE__).'/Runtime/');
+
+// 引入autoload入口文件
+require dirname(__FILE__).'/vendor/autoload.php';
+
+// 引入ThinkPHP入口文件
+require dirname(__FILE__).'/ThinkPHP/ThinkPHP.php';

@@ -18,8 +18,8 @@ class AdminController extends BaseController
     /**
      * 万能搜索
      * @param Model $model 模型
-     * @param bool $page 分页数
-     * @param string $desc 排序方式
+     * @param bool $page 分页数-默认不分页
+     * @param string $desc 排序方式-默认倒叙
      * @param string $order 排序字段 'id,time'
      * @return mixed 排序结果集
      */
