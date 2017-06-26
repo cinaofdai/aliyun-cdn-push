@@ -32,11 +32,13 @@ class AdminLogic extends BaseModel
     //检验用户
     public function checkMember(){
         if( $this->create()){
-            $this->member = $this->where(array('username'=>$this->labels['username']))->find();
+            $map['username'] = $this->labels['username'];
+            $map['status'] = 1;
+            $this->member = $this->where($map)->find();
             if ( $this->member){
                 return ['status' => true, 'data' =>  $this->member];
             }
-            return ['status'=>false,'tag'=>'username','message'=>'用户不存在'];
+            return ['status'=>false,'tag'=>'username','message'=>'用户不存在或被禁用'];
         }
         $error = $this->getError();
         return ['status' => false,'tag'=>$error['tag'], 'message' => $error['error']];
@@ -66,6 +68,11 @@ class AdminLogic extends BaseModel
         if($result['status']==true){
             session(C("USER_AUTH_KEY"), $this->member['id']);
             session("username", $this->member['username']);
+
+            //登录日志更新
+            $this->member['login_time'] = time();
+            $this->member['login_ip'] = get_client_ip(0,true);
+            $this->save($this->member);
 
             //如果记住账号密码-vue.js复选框传的是true和false字符串
             if($this->labels['remember']=='true'){

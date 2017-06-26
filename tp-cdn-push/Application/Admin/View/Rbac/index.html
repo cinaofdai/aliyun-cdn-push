@@ -1,0 +1,61 @@
+<!-- PAGE CONTENT BEGINS -->
+<div class="row">
+    <div class="well well-sm">
+        <a onclick="addNode(this)" class="btn btn-sm btn-success">
+            <i class="icon-plus bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">添加控制器</span>
+        </a>
+        <a onclick="deleteCheck()" class="btn btn-sm btn-danger">
+            <i class="icon-trash bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">删除</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+       <volist name="list" id="item">
+           <div class="row">
+               <div class="widget-box">
+                   <div class="widget-header">
+                       <h4 class="widget-title">
+                           <label>
+                               <input name="rules[]" class="ace ace-checkbox-2 father" type="checkbox" value="{$item.id}">
+                               <span class="lbl">{$item.title}[{$item.name}]</span>
+                           </label>
+                       </h4>
+                       <div class="widget-toolbar">
+                           <a href="{:U('rbac/node',['show'=>1])}" class="btn btn-xs btn-info">
+                               <i class="icon-plus bigger-120"></i>
+                               添加方法
+                           </a>
+                       </div>
+                   </div>
+                   <div class="widget-body">
+                       <div class="widget-main row">
+                           <volist name="item.son" id="son">
+                               <label class="col-xs-2" style="width:160px;">
+                                   <input name="rules[]" class="ace ace-checkbox-2 children" type="checkbox" value="{$son.id}">
+                                   <span class="lbl">{$son.title}[{$son.name}]</span>
+                               </label>
+                           </volist>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </volist>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function addNode() {
+        layer.open({
+            type: 1,
+            title: '添加节点',
+            skin: 'layui-layer', //加上边框
+            area: ['420px', '300px'], //宽高
+            content: 'dsf'
+        });
+    }
+
+
+</script>

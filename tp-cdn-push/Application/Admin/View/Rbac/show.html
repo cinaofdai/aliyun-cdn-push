@@ -1,0 +1,91 @@
+<div class="row">
+    {:W('Nav/header')}
+</div>
+    <!--提示框组件-->
+    {:W('Nav/alert')}
+<div class="row">
+    <form class="form-horizontal" id="form">
+        <div data-tag="name" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-name">角色名称<span class="red">*</span></label>
+
+            <div class="col-sm-9">
+                <input id="form-input-name" v-model="model.name" placeholder="请输入不重复的角色名称" class="col-xs-10 col-sm-5" type="text">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="space-4"></div>
+
+        <div data-tag="status" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-status">是否启用<span class="red">*</span></label>
+
+            <div class="col-sm-3">
+                <label class="col-xs-9 col-sm-5">
+                    <input id="form-input-status" v-model="model.status" name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox">
+                    <span class="lbl"></span>
+                </label>
+                <span class="help-inline col-xs-12 col-sm-7">
+                    <span class="middle">YES，启用；NO，禁用</span>
+                </span>
+            </div>
+        </div>
+        <div data-tag="remark" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-remark">角色职责说明</label>
+
+            <div class="col-sm-9">
+                <input id="form-input-remark" v-model="model.remark" placeholder="请说明职责" class="col-xs-10 col-sm-5" type="text">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <button v-on:click="doSubmit()" class="btn btn-info" type="button">
+                    <i class="icon-ok bigger-110"></i>
+                    提交
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <button class="btn" type="reset">
+                    <i class="icon-undo bigger-110"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<script type="text/javascript">
+    util.get("{:U('rbac/show')}",{id:"{$show_id}"},function (data) {
+        var model = (data==false)?{status:true}:data;
+        var vm = new Vue({
+            el: "#form",
+            data: {
+                model:model,
+            },
+            methods: {
+                doSubmit: function() {
+                    console.log(this.model.remember);
+                    $.ajax({
+                        type:'post',
+                        data:this.model,
+                        url:"{:U('rbac/form')}",
+                        cache: false,
+                        dataType:'json',
+                        success:function(data){
+                            if(data.status==true){
+                                location.href="{:U('rbac/role')}";
+                            }else {
+                                $('[data-tag]').siblings().removeClass('has-error');
+                                $('[data-tag="'+data.tag+'"]').addClass('has-error');
+                                util.alert('danger',data.message,true);
+                            }
+                        }
+                    });
+                }
+            }
+        })
+    })
+</script>
