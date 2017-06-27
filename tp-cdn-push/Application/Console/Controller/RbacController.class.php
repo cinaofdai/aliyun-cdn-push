@@ -15,10 +15,10 @@ class RbacController extends Controller {
      * 节点初始化
      */
     public function init(){
+        $ignore = $_GET['no'];
         try {
             $dir = APP_PATH. 'Admin/Controller';
             $controllers = glob($dir. '/*');
-            $permissions = [];
 
             $auth = new NodeModel();
             $auth->clearInit();
@@ -26,8 +26,12 @@ class RbacController extends Controller {
                 $content = file_get_contents($controller);
                 preg_match('/class ([a-zA-Z]+)Controller/', $content, $match);
                 $cName = $match[1];
+
+                if($ignore==$cName){
+                    continue;
+                }
+                
                 $pid = $auth->createNode($cName,2);
-                $permissions[] = strtolower($cName. '/*');
                 preg_match_all('/public function ([a-zA-Z_]+)/', $content, $matches);
                 foreach ($matches[1] as $aName) {
                     $auth->createNode($aName,3,$pid);

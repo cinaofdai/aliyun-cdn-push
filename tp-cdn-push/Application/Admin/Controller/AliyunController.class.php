@@ -3,7 +3,7 @@
  * Created by dh2y
  * email: xiaodai54_long@163.com
  * Date: 2017/6/16 15:38
- * describ: 阿里云相关
+ * describ: 阿里云推送
  */
 
 namespace Admin\Controller;
@@ -15,11 +15,17 @@ use Common\Controller\AdminController;
 class AliyunController extends AdminController
 {
 
+    /**
+     * @title 查看推送
+     */
     public function index(){
         $this->display();
     }
 
 
+    /**
+     * @title 推送刷新
+     */
     public function refresh(){
         AliyunCdn::start();
         $c = new \AliyunClient;

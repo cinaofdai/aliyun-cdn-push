@@ -3,7 +3,7 @@
  * Created by dh2y
  * email: xiaodai54_long@163.com
  * Date: 2017/6/22 11:21
- * describ: 权限管理模块控制器
+ * describ: 权限管理
  */
 
 namespace Admin\Controller;
@@ -16,6 +16,7 @@ use Common\Controller\AdminController;
 class RbacController extends AdminController
 {
     /**
+     * @title 角色列表
      * 角色列表
      */
     public function role(){
@@ -24,6 +25,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 查看角色
      * doAction - 角色
      * 查看编辑数据及渲染添加页面
      */
@@ -43,6 +45,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 操作角色数据
      * 添加或编辑角色
      */
     public function form(){
@@ -56,6 +59,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 删除角色
      * 删除角色
      */
     public function remove(){
@@ -74,6 +78,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 删除状态
      * 改变角色状态
      */
     public function status(){
@@ -101,7 +106,7 @@ class RbacController extends AdminController
 
 
     /**
-     * 节点列表
+     * @title 节点列表
      */
     public function index(){
         $mode = new NodeModel();
@@ -112,7 +117,7 @@ class RbacController extends AdminController
     }
 
     /**
-     * 查看编辑节点
+     * @title 查看编辑节点
      */
     public function look(){
         $id = I('get.id',0);
@@ -129,6 +134,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 操作节点数据
      * 添加或编辑节点
      */
     public function node(){
@@ -142,6 +148,7 @@ class RbacController extends AdminController
     }
 
     /**
+     * @title 删除节点数据
      * 删除节点
      */
     public function deleted(){

@@ -3,7 +3,7 @@
  * Created by dh2y
  * email: xiaodai54_long@163.com
  * Date: 2017/6/22 12:27
- * describ: 用户管理控制器
+ * describ: 用户管理
  */
 
 namespace Admin\Controller;
@@ -16,6 +16,7 @@ class MemberController extends AdminController
 {
 
     /**
+     * @title 用户列表
      * 用户列表
      */
     public function index(){
@@ -24,6 +25,7 @@ class MemberController extends AdminController
     }
 
     /**
+     * @title 查看用户
      * 查看编辑数据及渲染添加页面
      */
     public function show(){
@@ -42,6 +44,7 @@ class MemberController extends AdminController
     }
 
     /**
+     * @title 操作用户数据
      * 添加或编辑用户
      */
     public function form(){
@@ -55,7 +58,7 @@ class MemberController extends AdminController
     }
 
     /**
-     * 删除数据
+     * @title 删除数据
      */
     public function remove(){
         $data = I('post.ids');
@@ -73,6 +76,7 @@ class MemberController extends AdminController
     }
 
     /**
+     * @title 用户状态
      * 改变用户状态
      */
     public function status(){

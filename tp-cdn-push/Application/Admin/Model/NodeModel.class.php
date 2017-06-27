@@ -90,10 +90,11 @@ class NodeModel extends BaseModel
      * @param $pid    //父及ID 默认为1
      * @return mixed
      */
-    public function createNode($name,$level,$pid=1){
+    public function createNode($name,$level,$pid=1,$title=false){
         $map['status'] = 1;
         $map['name'] = $name;
         $map['pid'] = $pid;
+        $title?($map['title']=$title):false;
         $map['level'] = $level;
         if($level==2){
             $map['pid'] = 1;
