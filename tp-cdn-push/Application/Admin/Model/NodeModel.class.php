@@ -15,30 +15,28 @@ class NodeModel extends BaseModel
 {
     protected $tableName = 'node';
 
-    protected $labels = ['username'=>'','status'=>1];
+    protected $labels = ['name'=>'','title'=>'','status'=>1,'sort'=>99,'pid'=>1,'level'=>2];
 
     //自动验证
     protected $_validate = array(
-        ['name','require',['tag'=>'username','error'=>'角色名必须！']],
-        ['name','',['tag'=>'username','error'=>'角色名已经存在！'],0,'unique'],
-        ['status',[0,1],['tag'=>'status','error'=>'状态不合法！'],2,'in'],//状态,1开启，0关闭
+        ['name','require','节点必须！'],
+        ['title','require','节点中文名必须！'],
+        ['name','/^[A-Za-z0-9]+$/','老铁！只能是英文数字'],
+        ['pid','/^[1-9]\d*$/','父节点整形'],
+        ['sort','/^[0-9]\d*$/','排序序号整形'],
+        ['level',[2,3],'节点类型错误！',2,'in'],//状态,1开启，0关闭
     );
-
 
     //数据操作
     public function store($data){
-
-        $action = isset($data[$this->pk]) ? "save" : "add";
+        $action =( isset($data[$this->pk])&&$data[$this->pk]!='') ? "save" : "add";
         if ($this->create($data)) {
-            $this->labels['status'] = ($this->labels['status']=='true')?1:0;
             if($this->$action($this->labels)){
                 return ['status' => true, 'message' => '数据操作成功'];
             }
         }
-        $error = $this->getError();
-        return ['status' => false,'tag'=>$error['tag'], 'message' => $error['error']];
+        return ['status' => false, 'message' => $this->getError()];
     }
-
 
 
     /**
@@ -71,6 +69,19 @@ class NodeModel extends BaseModel
         return $arr;
     }
 
+
+    public function deleteNode($id)
+    {
+        $map['pid'] = $id;
+        $son = $this->where($map)->find();
+        if(!$son){
+           if( $this->delete($id)){
+               return ['status' => true, 'message' => '删除成功'];
+           }
+           return ['status' => false, 'message' => '异常，删除失败'];
+        }
+        return ['status' => false, 'message' => '存在子节点删除失败'];
+    }
 
     /**
      *  创建节点(此方法cli调用)

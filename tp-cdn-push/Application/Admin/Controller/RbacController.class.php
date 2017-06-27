@@ -112,20 +112,46 @@ class RbacController extends AdminController
     }
 
     /**
-     * doAction - 节点
-     * 查看编辑数据及渲染添加页面
+     * 查看编辑节点
      */
-    public function node(){
+    public function look(){
         $id = I('get.id',0);
-        if($id){
+        if(IS_AJAX&&$id){
             $model = new NodeModel();
             $data =$model->find($id);
             if($data){
-                $this->assign('data',$data);
+                $this->ajaxReturn($data);
             }
+            $this->ajaxReturn(false);
+        }else{
+            new \HttpRequestMethodException('请求不合法');
         }
-        layout(false);
-        $this->display();
+    }
+
+    /**
+     * 添加或编辑节点
+     */
+    public function node(){
+        if (IS_POST){
+            $data = I('post.');
+            $model = new NodeModel();
+            $this->ajaxReturn($res = $model->store($data));
+        }else{
+            new \HttpRequestMethodException('请求不合法');
+        }
+    }
+
+    /**
+     * 删除节点
+     */
+    public function deleted(){
+        if (IS_POST){
+            $data = I('post.id',0);
+            $model = new NodeModel();
+            $this->ajaxReturn($res = $model->deleteNode($data));
+        }else{
+            new \HttpRequestMethodException('请求不合法');
+        }
     }
 
 }
