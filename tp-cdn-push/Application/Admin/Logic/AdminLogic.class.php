@@ -66,8 +66,13 @@ class AdminLogic extends BaseModel
         }
         $result = $this->checkPass($this->labels['password']);
         if($result['status']==true){
-            session(C("USER_AUTH_KEY"), $this->member['id']);
+            session(C("USER_AUTH_KEY"), $this->member['id']);//(RBAC)
             session("username", $this->member['username']);
+
+            //如果为超级管理员，则无需验证(RBAC)
+            if($this->member['username'] == C('RBAC_SUPERADMIN')) {
+                session(C('ADMIN_AUTH_KEY'), true);
+            }
 
             //登录日志更新
             $this->member['login_time'] = time();

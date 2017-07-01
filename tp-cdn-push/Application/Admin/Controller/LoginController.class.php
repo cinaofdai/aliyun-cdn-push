@@ -10,9 +10,10 @@ namespace Admin\Controller;
 
 
 use Admin\Logic\AdminLogic;
-use Common\Controller\AdminController;
+use Org\Util\Rbac;
+use Think\Controller;
 
-class LoginController extends AdminController
+class LoginController extends Controller
 {
 
     /**
@@ -27,8 +28,13 @@ class LoginController extends AdminController
      * 登录操作
      */
     public function login(){
+
         $admin = new AdminLogic();
-        $this->ajaxReturn($admin->doLogin());
+        $result = $admin->doLogin();
+
+        //读取用户权限
+        Rbac::saveAccessList();
+        $this->ajaxReturn($result);
     }
 
     /**
@@ -59,6 +65,7 @@ class LoginController extends AdminController
     public function logout(){
         session(C("USER_AUTH_KEY"), null);
         session("username", null);
+        session(null);
         $this->redirect('index');
     }
 }

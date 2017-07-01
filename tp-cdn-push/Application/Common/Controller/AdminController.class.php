@@ -10,11 +10,21 @@ namespace Common\Controller;
 
 
 use Common\Org\Page;
+use Org\Util\Rbac;
 use Think\Model;
 
 class AdminController extends BaseController
 {
 
+    public function _initialize(){
+        if(!isset($_SESSION[C('USER_AUTH_KEY')])) {
+            $this->redirect(U('login/login'));
+        }
+
+        if(!Rbac::AccessDecision()){
+            $this->error('您没有权限');
+        }
+    }
     /**
      * 万能搜索
      * @param Model $model 模型

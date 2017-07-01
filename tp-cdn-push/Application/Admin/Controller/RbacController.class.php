@@ -176,6 +176,7 @@ class RbacController extends AdminController
             foreach($node as $key => $value){
                 $node[$key]['role_id'] = $role_id;
             }
+            $node[] = ['node_id'=>1,'level'=>1,'role_id'=>$role_id];  //默认将后台分组加上去
 
             if(M('access')->addAll($node) ){
                $this->ajaxReturn(['status'=>true,'message'=>'授权成功']);
