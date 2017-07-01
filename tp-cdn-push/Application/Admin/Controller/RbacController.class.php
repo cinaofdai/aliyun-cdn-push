@@ -161,4 +161,37 @@ class RbacController extends AdminController
         }
     }
 
+    /**
+     * 授权角色授权
+     */
+    public function access(){
+        $id = I('get.role_id',0);
+        if(IS_POST){
+            $role_id = I('post.role_id');
+            $node_ids = I('post.rules');
+            M('access')->where(['role_id'=>$role_id])->delete();
+
+            $nodeMap['id'] = ['in',$node_ids];
+            $node = M('node')->field('id as node_id,level')->where($nodeMap)->select();
+            foreach($node as $key => $value){
+                $node[$key]['role_id'] = $role_id;
+            }
+
+            if(M('access')->addAll($node) ){
+               $this->ajaxReturn(['status'=>true,'message'=>'授权成功']);
+            }else{
+               $this->ajaxReturn(['status'=>false,'message'=>'授权失败']);
+            }
+        }
+        $mode = new NodeModel();
+        $list = $mode->getTreeList();
+        $this->assign('list',$list);
+        $this->assign('role',M('role')->find($id));
+
+        //取出用户的节点
+        $access = M('access')->field('node_id')->where(['role_id'=>$id])->select();
+        $this->assign('access',implode(',',array_column($access,'node_id')));
+        $this->display();
+    }
+
 }

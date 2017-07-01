@@ -1,0 +1,75 @@
+<div class="row">
+    <h3 class="header smaller lighter green">授权角色：{$role.name}</h3>
+</div>
+<form id="access" action="{:U('rbac/access')}" method="post">
+    <input type="hidden" name="role_id" value="{$role.id}">
+    <div class="row">
+        <div class="well well-sm">
+            <a onclick="RoleAccess()" class="btn btn-sm btn-success">
+                <i class="icon-key bigger-110"></i>
+                <span class="bigger-110 no-text-shadow">确定授权</span>
+            </a>
+            <button type="reset" class="btn btn-sm">
+                <i class="icon-undo bigger-110"></i>
+                <span class="bigger-110 no-text-shadow">清除刚才勾选</span>
+            </button>
+        </div>
+    </div>
+    <volist name="list" id="item">
+        <div class="row">
+            <div class="widget-container-span ui-sortable">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">
+                            <label>
+                                <input name="rules[]" class="ace ace-checkbox-2 father" <in name="item.id" value="$access">checked="checked"</in> type="checkbox" value="{$item.id}">
+                                <span class="lbl">{$item.title}</span>
+                            </label>
+                        </h4>
+
+                        <div class="widget-toolbar">
+                            <a href="#" data-action="collapse">
+                                <i class="icon-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main row">
+                            <volist name="item.son" id="son">
+                                <label class="col-xs-2" style="width:160px;">
+                                    <input name="rules[]" class="ace ace-checkbox-2 children" <in name="son.id" value="$access">checked="checked"</in> type="checkbox" value="{$son.id}">
+                                    <span class="lbl">{$son.title}</span>
+                                </label>
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </volist>
+</form>
+<script type="text/javascript">
+    $(".children").click(function () {
+        $(this).parent().parent().parent().parent().find(".father").prop("checked", true);
+    })
+    $(".father").click(function () {
+        if (this.checked) {
+            $(this).parent().parent().parent().parent().find(".children").prop("checked", true);
+        } else {
+            $(this).parent().parent().parent().parent().find(".children").prop("checked", false);
+        }
+    })
+
+    function RoleAccess(){
+        util.submit('#access',function(data){
+            if(data.status==true){
+                layer.msg(data.message, function(){
+                    history.back();
+                });
+            }else {
+                layer.msg(data.message);
+            }
+        });
+    }
+</script>

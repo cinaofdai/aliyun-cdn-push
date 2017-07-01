@@ -83,6 +83,10 @@
                         <td>{$item.remark}</td>
                         <td>
                             <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                <a href="{:U('rbac/access',['role_id'=>$item['id']])}" class="btn btn-xs btn-inverse">
+                                    <i class="icon-key bigger-120"></i>
+                                    授权
+                                </a>
                                 <a href="{:U('rbac/show',['id'=>$item['id']])}" class="btn btn-xs btn-info">
                                     <i class="icon-edit bigger-120"></i>
                                     编辑
@@ -111,6 +115,13 @@
                                     </button>
 
                                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <a href="{:U('rbac/access',['role_id'=>$item['id']])}" class="tooltip-info" data-rel="tooltip" title="" data-original-title="授权">
+                                                <span class="blue">
+                                                    <i class="icon-key bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
                                         <li>
                                             <a href="{:U('rbac/show',['id'=>$item['id']])}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
                                                 <span class="green">
