@@ -57,6 +57,7 @@
                 </th>
                 <th>用户名称</th>
                 <th>Email</th>
+                <th>角色</th>
                 <th class="hidden-480">最后登录时间</th>
                 <th class="hidden-480">登录IP</th>
                 <th>状态</th>
@@ -76,6 +77,7 @@
 
                         <td>{$item.username}</td>
                         <td>{$item.email}</td>
+                        <td>{$item.role}</td>
                         <td class="hidden-480">{$item.login_time|date='Y-m-d H:i:s',###}</td>
                         <td class="hidden-480">{$item.login_ip}</td>
                         <td>

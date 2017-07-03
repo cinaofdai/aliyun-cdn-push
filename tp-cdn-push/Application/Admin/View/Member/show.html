@@ -5,6 +5,18 @@
     {:W('Nav/alert')}
 <div class="row">
     <form class="form-horizontal" id="form">
+        <div data-tag="role_id" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-role_id">选择角色<span class="red">*</span></label>
+            <div class="col-sm-9">
+                <select id="form-input-role_id" v-model="model.role_id" class="col-xs-10 col-sm-5">
+                    <option selected="selected" value="">请选择状态</option>
+                    <volist name="role" id="item">
+                        <option value="{$item.id}">{$item.name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+
         <div data-tag="username" class="form-group">
             <label class="col-sm-3 control-label no-padding-right" for="form-input-username">用户名称<span class="red">*</span></label>
 

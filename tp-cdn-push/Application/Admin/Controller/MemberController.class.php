@@ -20,7 +20,18 @@ class MemberController extends AdminController
      * 用户列表
      */
     public function index(){
-        $this->assign('list',$this->search(M('admin'),15));
+        $list = $this->search(M('admin'),15);
+
+        //显示管理员
+        $user_ids = array_column($list,'id');
+        $map['user_id'] = ['in',$user_ids];
+        $role = M('role_user u')->join('left join '.C('DB_PREFIX').'role r on r.id=u.role_id')->where($map)->select();
+        $role = array_column($role,'name','user_id');
+        foreach($list as $key=>$value){
+            $list[$key]['role'] = $role[$value['id']];
+        }
+
+        $this->assign('list',$list);
         $this->display();
     }
 
@@ -35,10 +46,13 @@ class MemberController extends AdminController
             $data =$model->find($id);
             if($data){
                 $data['status'] = ($data['status']==1)?true:false;
+                $role = M('role_user')->where(['user_id'=>$id])->find();
+                $data['role_id'] = $role['role_id'];
                 $this->ajaxReturn($data);
             }
             $this->ajaxReturn(false);
         }
+        $this->assign('role',M('role')->select());
         $this->assign('show_id',$id);
         $this->display();
     }

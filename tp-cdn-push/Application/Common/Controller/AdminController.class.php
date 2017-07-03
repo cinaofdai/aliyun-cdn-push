@@ -18,7 +18,7 @@ class AdminController extends BaseController
 
     public function _initialize(){
         if(!isset($_SESSION[C('USER_AUTH_KEY')])) {
-            $this->redirect(U('login/login'));
+            $this->redirect('login/index');
         }
 
         if(!Rbac::AccessDecision()){
