@@ -1,0 +1,93 @@
+<!-- PAGE CONTENT BEGINS -->
+<div class="row">
+    <div class="well well-sm">
+        <a href="{:U('menu/show')}" class="btn btn-sm btn-success">
+            <i class="icon-plus bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">添加</span>
+        </a>
+        <a onclick="deleteCheck()" class="btn btn-sm btn-danger">
+            <i class="icon-trash bigger-110"></i>
+            <span class="bigger-110 no-text-shadow">删除</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="table-responsive">
+        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="center">
+                    <label>
+                        <input class="ace" type="checkbox">
+                        <span class="lbl"></span>
+                    </label>
+                </th>
+                <th>菜单名称</th>
+                <th>链接</th>
+                <th>ICON</th>
+                <th>排序</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <form id="checkBox" method="post" action="{:U('menu/remove')}">
+                <tbody>
+                <volist name="list" id="item">
+                    <tr>
+                        <td class="center">
+                            <label>
+                                <input class="ace" name="ids[]" value="{$item.id}" type="checkbox">
+                                <span class="lbl"></span>
+                            </label>
+                        </td>
+
+                        <td>{$item._name}</td>
+                        <td>{$item.link}</td>
+                        <td>
+                            <i class="{$item.icon}"></i></td>
+                        <td>{$item.sort}</td>
+                        <td>
+                            <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                                <a href="{:U('menu/show',['id'=>$item['id']])}" class="btn btn-xs btn-info">
+                                    <i class="icon-edit bigger-120"></i>
+                                    编辑
+                                </a>
+
+                                <a onclick="actionOne(this,'delete')" class="btn btn-xs btn-danger">
+                                    <i class="icon-trash bigger-120"></i>
+                                    删除
+                                </a>
+                            </div>
+                            <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                <div class="inline position-relative">
+                                    <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-cog icon-only bigger-110"></i>
+                                    </button>
+
+                                    <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                        <li>
+                                            <a href="{:U('menu/show',['id'=>$item['id']])}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="编辑">
+                                                <span class="green">
+                                                    <i class="icon-edit bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a onclick="actionOne(this,'delete')" class="tooltip-error" data-rel="tooltip" title="" data-original-title="删除">
+                                                <span class="red">
+                                                    <i class="icon-trash bigger-120"></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </volist>
+                </tbody>
+            </form>
+        </table>
+    </div>
+</div>
+

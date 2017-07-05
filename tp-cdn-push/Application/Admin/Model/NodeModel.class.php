@@ -45,7 +45,7 @@ class NodeModel extends BaseModel
      */
     public function getTreeList(){
         $map['id'] = ['neq' ,1];
-        $datalist = $this->where($map)->select();
+        $datalist = $this->where($map)->order('sort')->select();
         $List = $this->getTree(1,$datalist);
         return $List;
     }

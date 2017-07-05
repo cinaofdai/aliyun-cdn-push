@@ -9,7 +9,7 @@
             <label class="col-sm-3 control-label no-padding-right" for="form-input-role_id">选择角色<span class="red">*</span></label>
             <div class="col-sm-9">
                 <select id="form-input-role_id" v-model="model.role_id" class="col-xs-10 col-sm-5">
-                    <option selected="selected" value="">请选择状态</option>
+                    <option value="">请选择角色</option>
                     <volist name="role" id="item">
                         <option value="{$item.id}">{$item.name}</option>
                     </volist>
@@ -79,7 +79,7 @@
 </div>
 <script type="text/javascript">
     util.get("{:U('member/show')}",{id:"{$show_id}"},function (data) {
-        var model = (data==false)?{status:true}:data;
+        var model = (data==false)?{status:true,role_id:''}:data;
         var vm = new Vue({
             el: "#form",
             data: {

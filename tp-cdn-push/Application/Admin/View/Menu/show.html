@@ -1,0 +1,509 @@
+<div class="row">
+    {:W('Nav/header')}
+</div>
+    <!--提示框组件-->
+    {:W('Nav/alert')}
+<div class="row">
+    <form class="form-horizontal" id="form">
+        <div data-tag="pid" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-pid">上级菜单<span class="red">*</span></label>
+            <div class="col-sm-9">
+                <select id="form-input-pid" v-model="model.pid" class="col-xs-10 col-sm-5">
+                    <option value="0">顶级菜单</option>
+                    <volist name="menu" id="item">
+                        <option value="{$item.id}">{$item._name}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div data-tag="title" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-title">菜单名称<span class="red">*</span></label>
+
+            <div class="col-sm-9">
+                <input id="form-input-title" v-model="model.title" placeholder="请输入菜单名称" class="col-xs-10 col-sm-5" type="text">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div data-tag="link" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-link">链接</label>
+
+            <div class="col-sm-9">
+                <input id="form-input-link" v-model="model.link" placeholder="请输入菜单链接" class="col-xs-10 col-sm-5" type="text">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div data-tag="icon" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-icon">icon图标</label>
+
+            <div class="col-sm-9">
+                <input id="form-input-icon" v-model="model.icon" placeholder="请输入icon图标" class="col-xs-10 col-sm-5" type="text">
+            </div>
+        </div>
+        <div data-tag="sort" class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-sort">排序</label>
+
+            <div class="col-sm-9">
+                <input id="form-input-sort" v-model="model.sort" placeholder="排序号" class="col-xs-10 col-sm-5" type="number">
+            </div>
+        </div>
+
+        <div class="space-4"></div>
+
+        <div class="clearfix form-actions">
+            <div class="col-md-offset-3 col-md-9">
+                <button v-on:click="doSubmit()" class="btn btn-info" type="button">
+                    <i class="icon-ok bigger-110"></i>
+                    提交
+                </button>
+                &nbsp; &nbsp; &nbsp;
+                <button class="btn" type="reset">
+                    <i class="icon-undo bigger-110"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">
+           图标库
+            <small>
+                <a href="http://fontawesome.io/icons/" target="_blank">
+                    (查看更多图标点击这里
+                    <i class="icon-external-link"></i>
+                    )
+                </a>
+            </small>
+        </h3>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <ul class="list-unstyled">
+            <li>
+                <i class="icon-adjust"></i>
+                icon-adjust
+            </li>
+
+            <li>
+                <i class="icon-asterisk"></i>
+                icon-asterisk
+            </li>
+
+            <li>
+                <i class="icon-ban-circle"></i>
+                icon-ban-circle
+            </li>
+
+            <li>
+                <i class="icon-bar-chart"></i>
+                icon-bar-chart
+            </li>
+
+            <li>
+                <i class="icon-barcode"></i>
+                icon-barcode
+            </li>
+
+            <li>
+                <i class="icon-beaker"></i>
+                icon-beaker
+            </li>
+
+            <li>
+                <i class="icon-beer"></i>
+                icon-beer
+            </li>
+
+            <li>
+                <i class="icon-bell"></i>
+                icon-bell
+            </li>
+
+            <li>
+                <i class="icon-bell-alt"></i>
+                icon-bell-alt
+            </li>
+
+            <li>
+                <i class="icon-bolt"></i>
+                icon-bolt
+            </li>
+
+            <li>
+                <i class="icon-book"></i>
+                icon-book
+            </li>
+
+            <li>
+                <i class="icon-bookmark"></i>
+                icon-bookmark
+            </li>
+
+            <li>
+                <i class="icon-bookmark-empty"></i>
+                icon-bookmark-empty
+            </li>
+
+            <li>
+                <i class="icon-briefcase"></i>
+                icon-briefcase
+            </li>
+
+            <li>
+                <i class="icon-bullhorn"></i>
+                icon-bullhorn
+            </li>
+
+            <li>
+                <i class="icon-calendar"></i>
+                icon-calendar
+            </li>
+
+            <li>
+                <i class="icon-camera"></i>
+                icon-camera
+            </li>
+
+            <li>
+                <i class="icon-camera-retro"></i>
+                icon-camera-retro
+            </li>
+
+            <li>
+                <i class="icon-certificate"></i>
+                icon-certificate
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <ul class="list-unstyled">
+            <li>
+                <i class="icon-check"></i>
+                icon-check
+            </li>
+
+            <li>
+                <i class="icon-check-empty"></i>
+                icon-check-empty
+            </li>
+
+            <li>
+                <i class="icon-circle"></i>
+                icon-circle
+            </li>
+
+            <li>
+                <i class="icon-circle-blank"></i>
+                icon-circle-blank
+            </li>
+
+            <li>
+                <i class="icon-cloud"></i>
+                icon-cloud
+            </li>
+
+            <li>
+                <i class="icon-cloud-download"></i>
+                icon-cloud-download
+            </li>
+
+            <li>
+                <i class="icon-cloud-upload"></i>
+                icon-cloud-upload
+            </li>
+
+            <li>
+                <i class="icon-coffee"></i>
+                icon-coffee
+            </li>
+
+            <li>
+                <i class="icon-cog"></i>
+                icon-cog
+            </li>
+
+            <li>
+                <i class="icon-cogs"></i>
+                icon-cogs
+            </li>
+
+            <li>
+                <i class="icon-comment"></i>
+                icon-comment
+            </li>
+
+            <li>
+                <i class="icon-comment-alt"></i>
+                icon-comment-alt
+            </li>
+
+            <li>
+                <i class="icon-comments"></i>
+                icon-comments
+            </li>
+
+            <li>
+                <i class="icon-comments-alt"></i>
+                icon-comments-alt
+            </li>
+
+            <li>
+                <i class="icon-credit-card"></i>
+                icon-credit-card
+            </li>
+
+            <li>
+                <i class="icon-dashboard"></i>
+                icon-dashboard
+            </li>
+
+            <li>
+                <i class="icon-desktop"></i>
+                icon-desktop
+            </li>
+
+            <li>
+                <i class="icon-download"></i>
+                icon-download
+            </li>
+
+            <li>
+                <i class="icon-download-alt"></i>
+                icon-download-alt
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <ul class="list-unstyled">
+            <li>
+                <i class="icon-edit"></i>
+                icon-edit
+            </li>
+
+            <li>
+                <i class="icon-envelope"></i>
+                icon-envelope
+            </li>
+
+            <li>
+                <i class="icon-envelope-alt"></i>
+                icon-envelope-alt
+            </li>
+
+            <li>
+                <i class="icon-exchange"></i>
+                icon-exchange
+            </li>
+
+            <li>
+                <i class="icon-exclamation-sign"></i>
+                icon-exclamation-sign
+            </li>
+
+            <li>
+                <i class="icon-external-link"></i>
+                icon-external-link
+            </li>
+
+            <li>
+                <i class="icon-eye-close"></i>
+                icon-eye-close
+            </li>
+
+            <li>
+                <i class="icon-eye-open"></i>
+                icon-eye-open
+            </li>
+
+            <li>
+                <i class="icon-facetime-video"></i>
+                icon-facetime-video
+            </li>
+
+            <li>
+                <i class="icon-fighter-jet"></i>
+                icon-fighter-jet
+            </li>
+
+            <li>
+                <i class="icon-film"></i>
+                icon-film
+            </li>
+
+            <li>
+                <i class="icon-filter"></i>
+                icon-filter
+            </li>
+
+            <li>
+                <i class="icon-fire"></i>
+                icon-fire
+            </li>
+
+            <li>
+                <i class="icon-flag"></i>
+                icon-flag
+            </li>
+
+            <li>
+                <i class="icon-folder-close"></i>
+                icon-folder-close
+            </li>
+
+            <li>
+                <i class="icon-folder-open"></i>
+                icon-folder-open
+            </li>
+
+            <li>
+                <i class="icon-folder-close-alt"></i>
+                icon-folder-close-alt
+            </li>
+
+            <li>
+                <i class="icon-folder-open-alt"></i>
+                icon-folder-open-alt
+            </li>
+
+            <li>
+                <i class="icon-food"></i>
+                icon-food
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+        <ul class="list-unstyled">
+            <li>
+                <i class="icon-gift"></i>
+                icon-gift
+            </li>
+
+            <li>
+                <i class="icon-glass"></i>
+                icon-glass
+            </li>
+
+            <li>
+                <i class="icon-globe"></i>
+                icon-globe
+            </li>
+
+            <li>
+                <i class="icon-group"></i>
+                icon-group
+            </li>
+
+            <li>
+                <i class="icon-hdd"></i>
+                icon-hdd
+            </li>
+
+            <li>
+                <i class="icon-headphones"></i>
+                icon-headphones
+            </li>
+
+            <li>
+                <i class="icon-heart"></i>
+                icon-heart
+            </li>
+
+            <li>
+                <i class="icon-heart-empty"></i>
+                icon-heart-empty
+            </li>
+
+            <li>
+                <i class="icon-home"></i>
+                icon-home
+            </li>
+
+            <li>
+                <i class="icon-inbox"></i>
+                icon-inbox
+            </li>
+
+            <li>
+                <i class="icon-info-sign"></i>
+                icon-info-sign
+            </li>
+
+            <li>
+                <i class="icon-key"></i>
+                icon-key
+            </li>
+
+            <li>
+                <i class="icon-leaf"></i>
+                icon-leaf
+            </li>
+
+            <li>
+                <i class="icon-laptop"></i>
+                icon-laptop
+            </li>
+
+            <li>
+                <i class="icon-legal"></i>
+                icon-legal
+            </li>
+
+            <li>
+                <i class="icon-lemon"></i>
+                icon-lemon
+            </li>
+
+            <li>
+                <i class="icon-lightbulb"></i>
+                icon-lightbulb
+            </li>
+
+            <li>
+                <i class="icon-lock"></i>
+                icon-lock
+            </li>
+
+            <li>
+                <i class="icon-unlock"></i>
+                icon-unlock
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    util.get("{:U('menu/show')}",{id:"{$show_id}"},function (data) {
+        var model = (data==false)?{pid:0}:data;
+        var vm = new Vue({
+            el: "#form",
+            data: {
+                model:model
+            },
+            methods: {
+                doSubmit: function() {
+                    $.ajax({
+                        type:'post',
+                        data:this.model,
+                        url:"{:U('menu/form')}",
+                        cache: false,
+                        dataType:'json',
+                        success:function(data){
+                            if(data.status==true){
+                                location.href="{:U('menu/index')}";
+                            }else {
+                                $('[data-tag]').siblings().removeClass('has-error');
+                                $('[data-tag="'+data.tag+'"]').addClass('has-error');
+                                util.alert('danger',data.message,true);
+                            }
+                        }
+                    });
+                }
+            }
+        })
+    })
+</script>
