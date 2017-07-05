@@ -9,6 +9,7 @@
 namespace Common\Controller;
 
 
+use Admin\Model\MenuModel;
 use Common\Org\Page;
 use Org\Util\Rbac;
 use Think\Model;
@@ -20,6 +21,10 @@ class AdminController extends BaseController
         if(!isset($_SESSION[C('USER_AUTH_KEY')])) {
             $this->redirect('login/index');
         }
+
+        //拿出权限菜单
+        $menu = new MenuModel();
+        $this->assign('menu',$menu->getMenu());
 
         if(!Rbac::AccessDecision()){
             $this->error('您没有权限');

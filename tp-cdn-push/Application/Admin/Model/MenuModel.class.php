@@ -11,6 +11,7 @@ namespace Admin\Model;
 
 use Common\Model\BaseModel;
 use Common\Org\Data;
+use Org\Util\Rbac;
 
 class MenuModel extends BaseModel
 {
@@ -43,6 +44,51 @@ class MenuModel extends BaseModel
     public function lists(){
         $data = $this->select();
         return Data::tree($data,'title', $fieldPri = 'id');
+    }
+
+
+    /**
+     * 获取权限菜单
+     * @param null $authId
+     * @return array|mixed
+     */
+    public function getMenu($authId=null){
+
+        if(session('MENU_LIST')){
+            return session('MENU_LIST');
+        }
+
+        //读取菜单
+        $menu = $this->select();
+        $keys = array_column($menu,'id');
+        $menu = array_combine($keys,$menu);
+
+        if(null===$authId)   $authId = $_SESSION[C('USER_AUTH_KEY')];
+        $access = Rbac::getAccessList($authId);
+        $access = $access['ADMIN'];
+
+        //读取节点
+        $list = [];
+        foreach($access as $key=>$value){
+            foreach($value as $id=>$item){
+                $list[] =strtolower($key.'/'.$id);
+            }
+        }
+
+        //返回有权限的菜单
+        $menuList = [];
+        foreach($menu as $key=>$value){
+            if(in_array($value['link'],$list)){
+                if($value['pid']!=0){
+                    $menuList[] = $menu[$value['pid']];
+                }
+                $menuList[] =  $value;
+            }
+        }
+
+        $menu = Data::channelLevel($menuList,$pid = 0, $html = "&nbsp;", $fieldPri = 'id');
+        session('MENU_LIST',$menu);
+        return $menu;
     }
 
 }
