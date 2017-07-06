@@ -60,35 +60,98 @@ class MenuModel extends BaseModel
 
         //读取菜单
         $menu = $this->select();
-        $keys = array_column($menu,'id');
-        $menu = array_combine($keys,$menu);
 
-        if(null===$authId)   $authId = $_SESSION[C('USER_AUTH_KEY')];
-        $access = Rbac::getAccessList($authId);
-        $access = $access['ADMIN'];
+        //如果不是超级管理员返回权限菜单
+        if(!session(C('ADMIN_AUTH_KEY'))){
+            $keys = array_column($menu,'id');
+            $menu = array_combine($keys,$menu);
 
-        //读取节点
-        $list = [];
-        foreach($access as $key=>$value){
-            foreach($value as $id=>$item){
-                $list[] =strtolower($key.'/'.$id);
-            }
-        }
+            if(null===$authId)   $authId = $_SESSION[C('USER_AUTH_KEY')];
+            $access = Rbac::getAccessList($authId);
+            $access = $access['ADMIN'];
 
-        //返回有权限的菜单
-        $menuList = [];
-        foreach($menu as $key=>$value){
-            if(in_array($value['link'],$list)){
-                if($value['pid']!=0){
-                    $menuList[] = $menu[$value['pid']];
+            //读取节点
+            $list = [];
+            foreach($access as $key=>$value){
+                foreach($value as $id=>$item){
+                    $list[] =strtolower($key.'/'.$id);
                 }
-                $menuList[] =  $value;
+            }
+
+            //返回有权限的菜单
+            $menuList = [];
+            foreach($menu as $key=>$value){
+                if(in_array($value['link'],$list)){
+                    if($value['pid']!=0){
+                        $menuList[] = $menu[$value['pid']];
+                    }
+                    $menuList[] =  $value;
+                }
             }
         }
 
-        $menu = Data::channelLevel($menuList,$pid = 0, $html = "&nbsp;", $fieldPri = 'id');
-        session('MENU_LIST',$menu);
+        $menuList = isset($menuList)?:$menu;
+        /*$link = CONTROLLER_NAME .'/'. ACTION_NAME;
+        $this->menuActive($menuList,$link);
+        $menu = Data::menuHtml($menuList,$link);*/
+        session('MENU_LIST',$menuList);
         return $menu;
+    }
+
+
+    /**
+     * 生成菜单
+     * @param $data
+     * @param int $pid
+     * @param string $fieldPri
+     * @param string $fieldPid
+     * @return bool|string
+     */
+    public function buildMenu($data, $pid = 0, $fieldPri = 'id', $fieldPid = 'pid'){
+        if (empty($data)) {
+            return false;
+        }
+        $arr ="";
+        $do =  session('menuList');
+        foreach ($data as $v) {
+            if ($v[$fieldPid] == $pid) {
+
+                $son = self::buildMenu($data,$v[$fieldPri], $fieldPri, $fieldPid);
+
+                $active =($do['p']==$v[$fieldPri])?'class="active open"':'';
+                $active =($do['s']==$v[$fieldPri])?'class="active"':$active;
+
+                $arr .= '<li '.$active.'><a '.($son?'class="dropdown-toggle"':'').' href="'.($v['link']!=''?U($v['link']):'#').'">';
+                if($v['icon']!=''){
+                    $arr .= '<i class="'.$v['icon'].'"></i>';
+                }else{
+                    $arr .= '<i class="icon-double-angle-right"></i>';
+                }
+                $arr .= $v['title'].($son?'<b class="arrow icon-angle-down"></b>':'').'</a>';
+
+                if($son){
+                    $arr .= '<ul class="submenu">'.$son.'</ul>';
+                }
+                $arr .= '</li>';
+
+            }
+        }
+        return $arr;
+    }
+
+    /**
+     * 设置活跃菜单
+     * @param $data
+     * @param string $link
+     * @param string $fieldPri
+     * @param string $fieldPid
+     */
+    public function menuActive($data,$link='', $fieldPri = 'id', $fieldPid = 'pid'){
+        foreach ($data as $v) {
+            if(strtolower($v['link'])==strtolower($link)){
+                session('menuList',['s'=>$v[$fieldPri],'p'=>$v[$fieldPid]]);
+            }
+        }
     }
 
 }

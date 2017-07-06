@@ -10,6 +10,7 @@ namespace Common\Controller;
 
 
 use Admin\Model\MenuModel;
+use Common\Org\Data;
 use Common\Org\Page;
 use Org\Util\Rbac;
 use Think\Model;
@@ -24,7 +25,11 @@ class AdminController extends BaseController
 
         //拿出权限菜单
         $menu = new MenuModel();
-        $this->assign('menu',$menu->getMenu());
+        $menuList = $menu->getMenu();
+
+        //设置活跃菜单
+        $menu->menuActive($menuList,CONTROLLER_NAME .'/'. ACTION_NAME);
+        $this->assign('menu',$menu->buildMenu($menuList));
 
         if(!Rbac::AccessDecision()){
             $this->error('您没有权限');
