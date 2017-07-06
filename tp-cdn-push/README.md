@@ -14,11 +14,8 @@ aliyun-cdn-push  ThinkPHP版本
 ## 安装效果图
 
 ![](http://www.thinkphp.cn/Uploads/editor/2017-07-06/595dfa18096d6.png)
-
 ![](http://www.thinkphp.cn/Uploads/editor/2017-07-06/595dfa1862294.png)
-
 ![](http://www.thinkphp.cn/Uploads/editor/2017-07-06/595dfa18ae3a8.png)
-
 ![](http://www.thinkphp.cn/Uploads/editor/2017-07-06/595dfa197a454.png)
 
 
