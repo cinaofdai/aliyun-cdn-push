@@ -91,9 +91,6 @@ class MenuModel extends BaseModel
         }
 
         $menuList = isset($menuList)?:$menu;
-        /*$link = CONTROLLER_NAME .'/'. ACTION_NAME;
-        $this->menuActive($menuList,$link);
-        $menu = Data::menuHtml($menuList,$link);*/
         session('MENU_LIST',$menuList);
         return $menu;
     }
@@ -112,12 +109,13 @@ class MenuModel extends BaseModel
             return false;
         }
         $arr ="";
-        $do =  session('menuList');
+        $do =  session('menuList');$active = '';
         foreach ($data as $v) {
             if ($v[$fieldPid] == $pid) {
 
                 $son = self::buildMenu($data,$v[$fieldPri], $fieldPri, $fieldPid);
 
+                //活跃标签
                 $active =($do['p']==$v[$fieldPri])?'class="active open"':'';
                 $active =($do['s']==$v[$fieldPri])?'class="active"':$active;
 
@@ -127,8 +125,9 @@ class MenuModel extends BaseModel
                 }else{
                     $arr .= '<i class="icon-double-angle-right"></i>';
                 }
-                $arr .= $v['title'].($son?'<b class="arrow icon-angle-down"></b>':'').'</a>';
+                $arr .= ('<span class="menu-text">'.$v['title'].'</span>').($son?'<b class="arrow icon-angle-down"></b>':'').'</a>';
 
+                //子菜单
                 if($son){
                     $arr .= '<ul class="submenu">'.$son.'</ul>';
                 }

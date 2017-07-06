@@ -90,4 +90,32 @@
         </table>
     </div>
 </div>
+<script type="text/javascript">
+    //删除选中选项
+    function deleteCheck() {
+        layer.confirm('您确定要删除吗', {
+            btn: ['确定','取消'], //按钮
+            shade: false //不显示遮罩
+        }, function(index){
+            layer.close(index);
+            util.submit('#checkBox',function (data) {
+                if(data.status==true){
+                    layer.msg(data.message, function(){
+                        location.reload();
+                    });
+                }else {
+                    layer.msg(data.message);
+                }
+            })
+        });
+    }
+
+    //删除/改变一个选项
+    function actionOne(_this,action) {
+        $(_this).parents('tr').find('[type="checkbox"]').prop("checked", true);
+        switch (action){
+            case 'delete':deleteCheck();return false;
+        }
+    }
+</script>
 

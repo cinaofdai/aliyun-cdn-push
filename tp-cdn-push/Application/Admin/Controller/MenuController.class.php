@@ -51,6 +51,9 @@ class MenuController extends AdminController
         if (IS_POST){
             $data = I('post.');
             $model = new MenuModel();
+
+            //编辑菜单清除菜单session缓存
+            session('MENU_LIST',null);
             $this->ajaxReturn($res = $model->store($data));
         }else{
             new \HttpRequestMethodException('请求不合法');
@@ -61,6 +64,20 @@ class MenuController extends AdminController
      * 删除菜单
      */
     public function remove(){
+        $data = I('post.ids');
+        if(IS_AJAX && is_array($data)){
+            $map['id'] = ['in',$data];
+            $result = M('menu')->where($map)->delete();
+            if($result){
 
+                //编辑菜单清除菜单session缓存
+                session('MENU_LIST',null);
+                $this->ajaxReturn(['status'=>true,'message'=>'删除成功']);
+            }else{
+                $this->ajaxReturn(['status'=>false,'message'=>'删除失败']);
+            }
+        }else{
+            new \HttpRequestMethodException('请求不合法');
+        }
     }
 }
