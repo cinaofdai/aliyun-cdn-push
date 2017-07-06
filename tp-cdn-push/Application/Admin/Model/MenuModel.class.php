@@ -62,7 +62,7 @@ class MenuModel extends BaseModel
         $menu = $this->select();
 
         //如果不是超级管理员返回权限菜单
-        if(!session(C('ADMIN_AUTH_KEY'))){
+        if(session('username')!= C('RBAC_SUPERADMIN')){
             $keys = array_column($menu,'id');
             $menu = array_combine($keys,$menu);
 
@@ -88,11 +88,12 @@ class MenuModel extends BaseModel
                     $menuList[] =  $value;
                 }
             }
+
         }
 
-        $menuList = isset($menuList)?:$menu;
+        $menuList = isset($menuList)?$menuList:$menu;
         session('MENU_LIST',$menuList);
-        return $menu;
+        return $menuList;
     }
 
 
@@ -109,7 +110,7 @@ class MenuModel extends BaseModel
             return false;
         }
         $arr ="";
-        $do =  session('menuList');$active = '';
+        $do =  session('menuList');
         foreach ($data as $v) {
             if ($v[$fieldPid] == $pid) {
 

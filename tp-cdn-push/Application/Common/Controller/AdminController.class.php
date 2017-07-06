@@ -29,7 +29,7 @@ class AdminController extends BaseController
 
         //设置活跃菜单
         $menu->menuActive($menuList,CONTROLLER_NAME .'/'. ACTION_NAME);
-        $this->assign('menu',$menu->buildMenu($menuList));
+        $this->assign('menuBar',$menu->buildMenu($menuList));
 
         if(!Rbac::AccessDecision()){
             $this->error('您没有权限');
