@@ -79,11 +79,14 @@ class MenuModel extends BaseModel
             }
 
             //返回有权限的菜单
-            $menuList = [];
+			$menuList = []; $pids = [];
             foreach($menu as $key=>$value){
                 if(in_array($value['link'],$list)){
                     if($value['pid']!=0){
-                        $menuList[] = $menu[$value['pid']];
+                        if(!in_array($value['pid'],$pids)){
+                            $menuList[] = $menu[$value['pid']];
+                            $pids[] = $value['pid'];
+                        }
                     }
                     $menuList[] =  $value;
                 }
